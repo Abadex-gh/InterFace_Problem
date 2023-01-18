@@ -67,18 +67,18 @@ public class Program {
 		System.out.print("Contract value: ");
 		double totalValue = sc.nextDouble();
 
-		Contract contract = new Contract(number, date, totalValue);
+		Contract contract = new Contract(number, date, totalValue); // contrato instanciado
 		
 		System.out.print("Number of installments: ");
 		int installmentsNumber = sc.nextInt();
 		
 		ConstractService contractService = new ConstractService(new PayPalService());
+		contractService.processContract(contract, installmentsNumber);
+		/*após o número de parcelas, instanciar o Contrato de Serviço*/
 
 		System.out.println("Installments value: ");
 		for (Installment installment : contract.getInstallments()){
 			System.out.println(installment);
 		}
-
 	}
-
 }
