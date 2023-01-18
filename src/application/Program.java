@@ -40,10 +40,45 @@
 
 package application;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.Scanner;
+
+import model.entities.Contract;
+import model.entities.Installment;
+import model.services.ConstractService;
+import model.services.PayPalService;
+
 public class Program {
 
-	public static void main(String[] args) {
-		System.out.println("hello world");
+	public static void main(String[] args) throws ParseException {
+
+		Scanner sc = new Scanner(System.in);
+		Locale.setDefault(Locale.US);
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		System.out.println("Enter with contract data: ");
+		System.out.print("Contract number: ");
+		int number = sc.nextInt();
+		System.out.print("Contract date: ");
+		LocalDate date = LocalDate.parse(sc.next(), fmt);
+		System.out.print("Contract value: ");
+		double totalValue = sc.nextDouble();
+
+		Contract contract = new Contract(number, date, totalValue);
+		
+		System.out.print("Number of installments: ");
+		int installmentsNumber = sc.nextInt();
+		
+		ConstractService contractService = new ConstractService(new PayPalService());
+
+		System.out.println("Installments value: ");
+		for (Installment installment : contract.getInstallments()){
+			System.out.println(installment);
+		}
+
 	}
 
 }
